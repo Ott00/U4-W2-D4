@@ -4,7 +4,11 @@ import com.github.javafaker.Faker;
 import it.epicode.classes.Customer;
 import it.epicode.classes.Order;
 import it.epicode.classes.Product;
+import org.apache.commons.io.FileUtils;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.function.Supplier;
@@ -141,6 +145,26 @@ public class Application {
                 .forEach((category, sum) -> System.out.println("Categoria: '" + category + "', Somma dei prodotti: " + sum + "€"));
 
         System.out.println();
+
+        //ESERCIZIO 6
+        System.out.println("ESERCIZIO 6");
+
+        File file = new File("./src/output.txt");
+
+
+        String dataToWrite = "";
+        for (Product product : products) {
+            dataToWrite += product.getName() + "@" + product.getCategory() + "@" + product.getPrice() + "#";
+        }
+        try {
+            FileUtils.writeStringToFile(file, dataToWrite + System.lineSeparator(), StandardCharsets.UTF_8, true);
+            System.out.println("Scritto");
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 }
 
